@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Learning - Reading & Math for Kids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #5b21b6;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .container {
+            flex: 1;
+            padding: 20px;
+            display: none;
+        }
+
+        .container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .home-screen {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .level-tile, .math-tile {
+            background: white;
+            width: 300px;
+            height: 200px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-tile:hover, .math-tile:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .level-tile h2, .math-tile h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+
+        .level-tile p, .math-tile p {
+            font-size: 1.2em;
+            color: #666;
+            z-index: 1;
+        }
+
+        .level-1 { background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); }
+        .level-2 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .level-3 { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+        .math-addition { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .math-subtraction { background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
+
+        .flashcard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .flashcard {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            font-size: 2.5em;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideIn 0.5s ease;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .card-controls {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .progress {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .math-problem {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .answer-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .answer-btn {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 2em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .answer-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(45deg, #11998e 0%, #38ef7d 100%);
+            animation: correct 0.6s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(45deg, #ff416c 0%, #ff4b2b 100%);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correct {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 Fun Learning Time! 🌟</h1>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+        <button class="nav-btn" onclick="showSection('reading')">📚 Reading</button>
+        <button class="nav-btn" onclick="showSection('math')">🔢 Math</button>
+    </div>
+
+    <!-- Home Section -->
+    <div id="home" class="container active">
+        <div class="home-screen">
+            <div class="level-tile" onclick="showSection('reading')">
+                <h2>📖 Reading</h2>
+                <p>Learn to read!</p>
+            </div>
+            <div class="math-tile" onclick="showSection('math')">
+                <h2>➕➖ Math</h2>
+                <p>Practice numbers!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading Section -->
+    <div id="reading" class="container">
+        <div id="reading-levels" class="home-screen">
+            <div class="level-tile level-1" onclick="startReading(1)">
+                <h2>Level 1 ⭐</h2>
+                <p>Easy words</p>
+            </div>
+            <div class="level-tile level-2" onclick="startReading(2)">
+                <h2>Level 2 ⭐⭐</h2>
+                <p>Longer words</p>
+            </div>
+            <div class="level-tile level-3" onclick="startReading(3)">
+                <h2>Level 3 ⭐⭐⭐</h2>
+                <p>Big sentences</p>
+            </div>
+        </div>
+        <div id="reading-cards" style="display: none;">
+            <button class="back-btn" onclick="backToReadingLevels()">← Back to Levels</button>
+            <div class="progress" id="reading-progress"></div>
+            <div class="flashcard-container">
+                <div class="flashcard" id="reading-card"></div>
+                <div class="card-controls">
+                    <button class="control-btn" id="prev-reading" onclick="previousCard()">← Previous</button>
+                    <button class="control-btn" id="next-reading" onclick="nextCard()">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Math Section -->
+    <div id="math" class="container">
+        <div id="math-types" class="home-screen">
+            <div class="math-tile math-addition" onclick="startMath('addition')">
+                <h2>➕ Addition</h2>
+                <p>Add numbers!</p>
+            </div>
+            <div class="math-tile math-subtraction" onclick="startMath('subtraction')">
+                <h2>➖ Subtraction</h2>
+                <p>Take away!</p>
+            </div>
+        </div>
+        <div id="math-cards" style="display: none;">
+            <button class="back-btn" onclick="backToMathTypes()">← Back to Math</button>
+            <div class="progress" id="math-progress"></div>
+            <div class="flashcard-container">
+                <div class="flashcard">
+                    <div>
+                        <div class="math-problem" id="math-problem"></div>
+                        <div class="answer-options" id="answer-options"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <script>
+        // Reading content for different levels
+        const readingContent = {
+            1: [
+                "The cat is big.",
+                "I can run fast.",
+                "The sun is hot.",
+                "My dog is cute.",
+                "I like to play.",
+                "The ball is red.",
+                "She has a toy.",
+                "We eat food.",
+                "The bird can fly.",
+                "I see a tree.",
+                "My mom is nice.",
+                "The car goes fast.",
+                "I want a hug.",
+                "The book is fun.",
+                "We are happy."
+            ],
+            2: [
+                "The yellow flower grows in the garden.",
+                "My friend likes to play soccer outside.",
+                "The little puppy barks at the mailman.",
+                "We baked cookies in the kitchen today.",
+                "The rainbow appears after the rain stops.",
+                "I brush my teeth every morning and night.",
+                "The teacher reads stories to the class.",
+                "My bicycle has two wheels and a bell.",
+                "The hungry cat drinks milk from a bowl.",
+                "We planted seeds in the brown soil.",
+                "The bright stars twinkle in the dark sky.",
+                "I packed my lunch in a blue box.",
+                "The friendly elephant has a long trunk.",
+                "We build sandcastles at the sunny beach.",
+                "My grandmother makes the best pancakes."
+            ],
+            3: [
+                "Every morning, the rooster crows loudly to wake up the farm animals.",
+                "The curious monkey swings from branch to branch looking for bananas.",
+                "Yesterday, we discovered a beautiful butterfly resting on the flowers.",
+                "My favorite activity is reading adventure books before bedtime.",
+                "The firefighters quickly rushed to help people during the emergency.",
+                "During winter, snowflakes fall gently from the cloudy gray sky.",
+                "The birthday party was filled with laughter, games, and chocolate cake.",
+                "Our classroom pet hamster loves to run on his exercise wheel.",
+                "The ancient dinosaurs lived millions of years before people existed.",
+                "Swimming in the pool helps me stay cool on hot summer days.",
+                "The wise owl hoots mysteriously in the forest at midnight.",
+                "My best friend and I share our toys and play together nicely.",
+                "The colorful parade marched through town with music and dancing.",
+                "Planting vegetables in our garden teaches us about healthy eating.",
+                "The brave knight protected the castle from the fearsome dragon."
+            ]
+        };
+
+        let currentSection = 'home';
+        let currentLevel = 1;
+        let currentCardIndex = 0;
+        let currentCards = [];
+        let mathType = '';
+        let mathProblems = [];
+        let currentMathIndex = 0;
+
+        function showSection(section) {
+            // Hide all containers
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Show selected container
+            document.getElementById(section).classList.add('active');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentSection = section;
+        }
+
+        function startReading(level) {
+            currentLevel = level;
+            currentCards = readingContent[level];
+            currentCardIndex = 0;
+            
+            document.getElementById('reading-levels').style.display = 'none';
+            document.getElementById('reading-cards').style.display = 'block';
+            
+            showReadingCard();
+        }
+
+        function showReadingCard() {
+            document.getElementById('reading-card').textContent = currentCards[currentCardIndex];
+            updateReadingProgress();
+            updateReadingButtons();
+            
+            // Add animation
+            const card = document.getElementById('reading-card');
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'slideIn 0.5s ease';
+            }, 10);
+        }
+
+        function updateReadingProgress() {
+            document.getElementById('reading-progress').textContent = 
+                `Card ${currentCardIndex + 1} of ${currentCards.length}`;
+        }
+
+        function updateReadingButtons() {
+            document.getElementById('prev-reading').disabled = currentCardIndex === 0;
+            document.getElementById('next-reading').disabled = currentCardIndex === currentCards.length - 1;
+        }
+
+        function previousCard() {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                showReadingCard();
+            }
+        }
+
+        function nextCard() {
+            if (currentCardIndex < currentCards.length - 1) {
+                currentCardIndex++;
+                showReadingCard();
+            }
+        }
+
+        function backToReadingLevels() {
+            document.getElementById('reading-levels').style.display = 'flex';
+            document.getElementById('reading-cards').style.display = 'none';
+        }
+
+        function startMath(type) {
+            mathType = type;
+            generateMathProblems();
+            currentMathIndex = 0;
+            
+            document.getElementById('math-types').style.display = 'none';
+            document.getElementById('math-cards').style.display = 'block';
+            
+            showMathProblem();
+        }
+
+        function generateMathProblems() {
+            mathProblems = [];
+            for (let i = 0; i < 10; i++) {
+                let num1, num2, answer;
+                
+                if (mathType === 'addition') {
+                    num1 = Math.floor(Math.random() * 10) + 1;
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    answer = num1 + num2;
+                    mathProblems.push({
+                        question: `${num1} + ${num2} = ?`,
+                        answer: answer,
+                        options: generateOptions(answer)
+                    });
+                } else {
+                    num1 = Math.floor(Math.random() * 10) + 5;
+                    num2 = Math.floor(Math.random() * num1) + 1;
+                    answer = num1 - num2;
+                    mathProblems.push({
+                        question: `${num1} - ${num2} = ?`,
+                        answer: answer,
+                        options: generateOptions(answer)
+                    });
+                }
+            }
+        }
+
+        function generateOptions(correctAnswer) {
+            const options = [correctAnswer];
+            while (options.length < 4) {
+                const offset = Math.floor(Math.random() * 6) - 3;
+                const wrongAnswer = correctAnswer + offset;
+                if (wrongAnswer >= 0 && wrongAnswer !== correctAnswer && !options.includes(wrongAnswer)) {
+                    options.push(wrongAnswer);
+                }
+            }
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        function showMathProblem() {
+            const problem = mathProblems[currentMathIndex];
+            document.getElementById('math-problem').textContent = problem.question;
+            
+            const optionsContainer = document.getElementById('answer-options');
+            optionsContainer.innerHTML = '';
+            
+            problem.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(option, problem.answer);
+                optionsContainer.appendChild(btn);
+            });
+            
+            updateMathProgress();
+        }
+
+        function updateMathProgress() {
+            document.getElementById('math-progress').textContent = 
+                `Problem ${currentMathIndex + 1} of ${mathProblems.length}`;
+        }
+
+        function checkAnswer(selected, correct) {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (parseInt(btn.textContent) === correct) {
+                    btn.classList.add('correct');
+                } else if (parseInt(btn.textContent) === selected) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            if (selected === correct) {
+                createStars();
+            }
+            
+            setTimeout(() => {
+                if (currentMathIndex < mathProblems.length - 1) {
+                    currentMathIndex++;
+                    showMathProblem();
+                } else {
+                    alert('Great job! You completed all the problems! 🎉');
+                    backToMathTypes();
+                }
+            }, 2000);
+        }
+
+        function backToMathTypes() {
+            document.getElementById('math-types').style.display = 'flex';
+            document.getElementById('math-cards').style.display = 'none';
+        }
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.textContent = '⭐';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    starsContainer.appendChild(star);
+                    
+                    setTimeout(() => {
+                        star.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>

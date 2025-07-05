@@ -1,0 +1,156 @@
+.container {
+  flex: 1;
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+.homeScreen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mathTile {
+  background: white;
+  width: 300px;
+  height: 200px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.mathTile:hover {
+  transform: translateY(-10px) rotate(2deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.mathTile h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.mathTile p {
+  font-size: 1.2em;
+  color: #666;
+  z-index: 1;
+}
+
+.mathAddition {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+.mathSubtraction {
+  background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
+}
+
+.flashcardContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.flashcard {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  font-size: 2.5em;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideIn 0.5s ease;
+  position: relative;
+}
+
+.mathProblem {
+  font-size: 3em;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.answerOptions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.answerBtn {
+  background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  padding: 20px 40px;
+  font-size: 2em;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.answerBtn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.answerBtn:disabled {
+  cursor: not-allowed;
+}
+
+.answerBtn.correct {
+  background: linear-gradient(45deg, #11998e 0%, #38ef7d 100%);
+  animation: correct 0.6s ease;
+}
+
+.answerBtn.incorrect {
+  background: linear-gradient(45deg, #ff416c 0%, #ff4b2b 100%);
+  animation: shake 0.5s ease;
+}
+
+@keyframes correct {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.backBtn {
+  background: linear-gradient(45deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 1.1em;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.backBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

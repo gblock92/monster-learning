@@ -1,0 +1,135 @@
+.container {
+  flex: 1;
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+.homeScreen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.levelTile {
+  background: white;
+  width: 300px;
+  height: 200px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.levelTile:hover {
+  transform: translateY(-10px) rotate(2deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.levelTile h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.levelTile p {
+  font-size: 1.2em;
+  color: #666;
+  z-index: 1;
+}
+
+.level1 {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+}
+
+.level2 {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.level3 {
+  background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+}
+
+.flashcardContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.flashcard {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  font-size: 2.5em;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideIn 0.5s ease;
+  position: relative;
+}
+
+.cardControls {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.controlBtn {
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.controlBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.controlBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.backBtn {
+  background: linear-gradient(45deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 1.1em;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.backBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
